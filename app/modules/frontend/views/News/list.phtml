@@ -1,0 +1,57 @@
+<?php
+foreach ($list->items as $item) { ?>
+    <div>
+        <a href="<?php echo $this->url->get('/frontend/news/detail/'.$item->id);?>"><h3><?php echo $item->title; ?></h3></a>
+        <div class="well"><?php echo $item->content; ?><a href="<?php echo $item->url; ?>">原文链接</a></div>
+    </div>
+<?php } ?>
+<?php if ($list->total_pages > 1) { ?>
+    <nav aria-label="Page navigation">
+        <ul class="pagination">
+            <li>
+                <a href="<?php echo $list->first; ?>" aria-label="First">
+                    <span aria-hidden="true">&laquo;</span>
+                </a>
+            </li>
+            <li>
+                <a href="<?php echo $list->before; ?>" aria-label="Previous">
+                    <span aria-hidden="true">&lt;</span>
+                </a>
+            </li>
+            <?php
+            $show_button_num = 8;
+            $left = 0;
+            if($list->total_pages <= $show_button_num){
+                $show_button_num = $list->total_pages - 1;
+                $left = $list->current - 1;
+            }else{
+                if($list->current < $show_button_num && $list->total_pages > $show_button_num) {
+                    $left = $list->current - 1;
+                } elseif ($list->current >= $show_button_num && $list->current < $list->total_pages - $show_button_num/2) {
+                    $left = 2;
+                } elseif ($list->current >= $list->total_pages - $show_button_num/2) {
+                    $left = $list->current - ($list->total_pages - $show_button_num);
+                }
+            }
+            $right = $show_button_num - $left;
+            ?>
+            <?php for ($i = $left; $i > 0; $i--) { ?>
+                <li><a href="<?php echo $list->current - $i; ?>"><?php echo $list->current - $i; ?></a></li>
+            <?php } ?>
+            <li><a href="javascript:;"><?php echo $list->current; ?></a></li>
+            <?php for ($i = 1; $i <= $right; $i++) { ?>
+                <li><a href="<?php echo $list->current + $i; ?>"><?php echo $list->current + $i; ?></a></li>
+            <?php } ?>
+            <li>
+                <a href="<?php echo $list->next; ?>" aria-label="Next">
+                    <span aria-hidden="true">&gt;</span>
+                </a>
+            </li>
+            <li>
+                <a href="<?php echo $list->last; ?>" aria-label="Last">
+                    <span aria-hidden="true">&raquo;</span>
+                </a>
+            </li>
+        </ul>
+    </nav>
+<?php } ?>
