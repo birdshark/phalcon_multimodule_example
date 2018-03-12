@@ -7,26 +7,16 @@ use Application\Common\Models\Roles;
 class PermissionController extends ControllerBase
 {
 
-    public function indexAction()
-    {
-
-    }
-
     public function addAction(){
         if($this->request->isPost()){
             $input = $this->request->getPost();
             $permission = new Permissions();
-            $validate = $permission->validation($input);
-            if(!$validate){
+            $result = $permission->create($input);
+            if(!$result){
                 $first_message = array_shift($permission->getMessages());
                 $this->view->setVars(['flag'=>'time','message'=>$first_message->getMessage(),'jumpUrl'=>'']);
             }else{
-                $result = $permission->create($input);
-                if($result){
-                    $this->view->setVars(['flag'=>'check','message'=>'添加成功!','jumpUrl'=>'']);
-                }else{
-                    $this->view->setVars(['flag'=>'time','message'=>'添加失败!','jumpUrl'=>'']);
-                }
+                $this->view->setVars(['flag'=>'check','message'=>'添加成功!','jumpUrl'=>'']);
             }
             return $this->view->pick('public/jump');
         } else {
@@ -67,5 +57,48 @@ class PermissionController extends ControllerBase
         }
     }
 
+    public function editAction($id){
+        if($this->request->isPost()){
+            $permission = new Permissions();
+            $input = $this->request->getPost();
+            $validate = $permission->save($input);
+            if (!$validate){
+                $first_message = array_shift($permission->getMessages());
+                if($this->request->isAjax()){
+                    return $this->response->setJsonContent(['flag'=>'check','message'=>$first_message->getMessage()]);
+                }else{
+                    $this->view->setVars(['flag'=>'check','message'=>$first_message->getMessage(),'jumpUrl'=>'']);
+                    return $this->view->pick('public/fails');
+                }
+            }else{
+                if($this->request->isAjax()){
+                    return $this->response->setJsonContent(['flag'=>'check','message'=>'修改成功!']);
+                }else{
+                    $this->view->setVars(['flag'=>'check','message'=>'修改成功!','jumpUrl'=>'']);
+                    return $this->view->pick('public/close');
+                }
+            }
+        }else{
+            $info = Permissions::findFirst($id);
+            $this->view->setVar('info',$info);
+            return $this->view->pick('permission/add');
+        }
+    }
+
+    public function deleteAction(){
+        if($this->request->isAjax()){
+            $id = $this->request->getPost('id');
+            try{
+                $result = Permissions::findFirst($id)->delete();
+                if(!$result){
+                    return $this->response->setJsonContent(['status'=>1,'msg'=>'删除成功']);
+                }else{
+                    return $this->response->setJsonContent(['status='>0,'msg'=>'删除失败']);
+                }
+            }catch (\Exception $e){
+                return $this->response->setJsonContent(['status='>0,'msg'=>$e->getMessage()]);
+            }
+        }
+    }
 }
 

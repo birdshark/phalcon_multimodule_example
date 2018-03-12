@@ -2,6 +2,7 @@
 namespace Application\Modules\Backend\Controllers;
 
 use Application\Common\Models\Admins;
+use Application\Common\Models\Roles;
 
 class AdminController extends ControllerBase
 {
@@ -55,16 +56,19 @@ class AdminController extends ControllerBase
     }
 
     public function roleAction(){
-        if($this->request->ajax()){
+        if($this->request->isAjax()){
             $aid = $this->request->get('aid',null,0);
-            $roles = Role::all(['id', 'name', 'display_name']);
-            $admin_roles = Admins::adminRoles($aid)->pluck('id')->all();
-            return Response::view('backend.admin.role',['admin_roles'=>$admin_roles,'roles'=>$roles]);
+            $roles = Roles::find();
+            $admin_roles = (new Admins())->getRole($aid);
+            $admin_roles = pluck($admin_roles,'id');
+            $this->view->setVars(['admin_roles'=>$admin_roles,'roles'=>$roles]);
+            return $this->view->pick('admin/role');
         }else{
             $aid = $this->request->get('aid',null,0);
-            $roles = Role::all(['id', 'name', 'display_name']);
-            $admin_roles = Admin::adminRoles($aid);
-            return view('backend.admin.role',['admin_roles'=>$admin_roles,'roles'=>$roles]);
+            $roles = Roles::find();
+            $admin_roles = (new Admins())->getRole($aid);
+            $this->view->setVars(['admin_roles'=>$admin_roles,'roles'=>$roles]);
+            return $this->view->pick('admin/role');
         }
     }
 

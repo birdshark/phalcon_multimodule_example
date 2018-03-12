@@ -49,6 +49,7 @@ class AuthController extends ControllerBase
             }
             if($this->security->checkHash($password, $admin->password)){
                 $roles_info = (new RoleAdmin())->getRole($admin->id);
+                $roles_info = array(pluck($roles_info,['name']),implode(',',pluck($roles_info,['id'])));
                 $this->_registerSession($admin, $roles_info);
                 return $this->response->setHeader('Location', '/backend/index/index');
             }else{

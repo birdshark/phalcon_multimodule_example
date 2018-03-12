@@ -25,13 +25,16 @@
                                     <a href="add"><i class="glyphicon glyphicon-plus" aria-hidden="true"></i></a>
                                 </button>
                             </div>
-                            @yield('table')
+                            {% block table %}{% endblock %}
                         </div>
                     </div>
                     <!-- End Example Toolbar -->
                 </div>
-                <div class="row row-lg">
-                    <div class="col-md-9 col-md-offset-8">
+            </div>
+
+            <div class="row row-lg m-t">
+                <div class="col-md-9 col-md-offset-8">
+                    <div>
                         <button type="button" class="btn btn-w-m btn-primary">确定</button>
                         <button type="button" class="btn btn-w-m btn-info">取消</button>
                     </div>
@@ -59,7 +62,7 @@
         return html.join('');
     }
 </script>
-@yield('script')
+{% block script %}{% endblock %}
 </body>
 
 </html>

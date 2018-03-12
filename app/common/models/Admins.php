@@ -138,7 +138,7 @@ class Admins extends ModelBase
     }
 
     public function getRole(){
-        $phql = "SELECT * FROM RoleAdmin WHERE RoleAdmin.admin_id = 1";
+        $phql = "SELECT * FROM c:RoleAdmin WHERE c:RoleAdmin.admin_id = 1";
         $result = $this->getModelsManager()->executeQuery($phql);
         return $result;
     }

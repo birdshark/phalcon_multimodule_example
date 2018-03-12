@@ -49,7 +49,7 @@
             ].join('');
         }
         var showOrHide = function(id,show,name){
-            commonAjax('{{url('/backend/permission/edit/')}}/' + id,{id:id,show:show,name:name})
+            commonAjax('{{url('/backend/permission/edit/')}}' + id,{id:id,show:show,name:name})
         }
         $table.on('post-body.bs.table', function (data) {
             $($table[0]).find('tbody').find("[name='my-checkbox']").bootstrapSwitch();

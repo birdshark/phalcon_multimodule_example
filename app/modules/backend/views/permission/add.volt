@@ -32,8 +32,8 @@
             <label class="col-sm-3 control-label">显隐模式：</label>
             <div class="col-sm-8">
                 <select class="form-control m-b" name="show" id="show">
-                    <option value="1" @if(info.show == 1) selected @endif>显</option>
-                    <option value="0" @if(info.show == 0) selected @endif>隐</option>
+                    <option value="1" {% if info.show === 1 %} selected {% endif %}>显</option>
+                    <option value="0" {% if info.show === 0 %} selected {% endif %}>隐</option>
                 </select>
             </div>
         </div>
@@ -42,8 +42,8 @@
             <div class="col-sm-8">
                 {#<input type="checkbox" class="js-switch" checked />#}
                 <select class="form-control m-b" name="mode" id="mode">
-                    <option value="common" @if(info.mode == 'common') selected @endif>普通</option>
-                    <option value="system" @if(info.mode == 'system') selected @endif>系统</option>
+                    <option value="common" {%  if info.mode == 'common' %} selected {% endif %}>普通</option>
+                    <option value="system" {%  if info.mode == 'system' %} selected {% endif %}>系统</option>
                 </select>
             </div>
         </div>

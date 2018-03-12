@@ -45,7 +45,7 @@
 <script src="/backend/assets/js/plugins/bootstrap-table/locale/bootstrap-table-zh-CN.min.js"></script>
 <script src="/backend/assets/js/plugins/switch/bootstrap-switch.js"></script>
 <script>
-    var $table = $('#table');
+    var $table = $('#table'),model = '{% block controller %}{% endblock %}';
 
     var detailFormatter = function(index, row){
         var html = [];
@@ -68,7 +68,7 @@
                 shadeClose: true,
                 shade: 0.8,
                 area: ['90%', '90%'],
-                content: '/backend/{% block controller %}{% endblock %}/edit/' + id
+                content: '/backend/'+model+'/edit/' + id
             });
         },
         'click .remove': function (e, value, row, index) {
@@ -76,7 +76,7 @@
               btn: ['确定', '取消']
             }, function(index){
                 deleteData(row.id);
-                this.close();
+                layer.close(index)
             }, function(index){
             });
             
@@ -84,7 +84,7 @@
     };
 
     var deleteData = function(id){
-        commonAjax('/backend/{% block controller %}{% endblock %}/delete',{id:id},function(json){
+        commonAjax('/backend/'+model+'/delete',{id:id},function(json){
             layer.msg(json.msg);
             $table.bootstrapTable('remove', {
                 field: 'id',

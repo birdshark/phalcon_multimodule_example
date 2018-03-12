@@ -1,6 +1,5 @@
-@extends('backend._layouts.pick')
-
-@section('table')
+{% extends '_layouts/pick.volt' %}
+{% block table %}
     <table id="table" data-mobile-responsive="true"
            data-toggle="table"
            data-height="420"
@@ -20,8 +19,8 @@
            data-page-list="[10, 25, 50, 100, ALL]"
            data-show-footer="false"
            data-side-pagination="server"
-           data-url="/backend/admin/pick"
-            {{--data-response-handler="responseHandler"--}}
+           data-url="/backend/admin/list"
+           {#data-response-handler="responseHandler"#}
     >
         <thead>
         <tr>
@@ -32,9 +31,9 @@
         </tr>
         </thead>
     </table>
-@stop
-@section('controller','admin')
-@section('script')
+{% endblock %}
+{% block controller %}admin{% endblock %}
+{% block script %}
 <script>
     $('.btn').click(function(){
         var _this = $(this),$selections = $table.bootstrapTable('getSelections'),index = parent.layer.getFrameIndex(window.name);
@@ -44,10 +43,8 @@
             parent.$('input[name="admin_id"]').val($selections[0].id);
             parent.layer.close(index);
         }else if(_this.hasClass('btn-info')){
-            console.log($selections);
-        }else if(_this.hasClass('btn-info')){
-            console.log($selections);
+            parent.layer.close(index);
         }
     });
 </script>
-@stop
+{% endblock %}

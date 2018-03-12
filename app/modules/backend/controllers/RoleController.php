@@ -36,20 +36,15 @@ class RoleController extends ControllerBase
 
     public function addAction(){
         if($this->request->isPost()){
-            $input = $this->request->all();
-            $validator = Role::validate($input);
-            if($validator->fails()){
-                $messages = $validator->messages();
-                return view('backend.public.jump',['flag'=>'time','message'=>'添加失败!']);
+            $input = $this->request->getPost();
+            $role = new Roles();
+            $result = $role->create($input);
+            if(!$result){
+                $this->view->setVars(['flag'=>'time','message'=>'添加失败!']);
+                return $this->view->pick('public/jump');
             }else{
-                unset($input['_token']);
-                unset($input['id']);
-                $result = Role::create($input);
-                if($result){
-                    return view('backend.public.jump',['flag'=>'check','message'=>'添加成功!']);
-                }else{
-                    return view('backend.public.jump',['flag'=>'time','message'=>'添加失败!']);
-                }
+                $this->view->setVars(['flag'=>'time','message'=>'添加成功!']);
+                return $this->view->pick('public/jump');
             }
         }else{
             $info = new Roles();
@@ -57,8 +52,8 @@ class RoleController extends ControllerBase
         }
     }
 
-    public function editAction(){
-        if($this->request->method() == 'POST'){
+    public function editAction($id){
+        if($this->request->isPost()){
             $input = $this->request->all();
             $validator = Role::validate($input);
             if ($validator->fails()){
@@ -104,6 +99,22 @@ class RoleController extends ControllerBase
         }else{
             $roles = Roles::find();
             $this->view->setVar('roles' , $roles);
+        }
+    }
+
+    public function deleteAction(){
+        if($this->request->isAjax()){
+            $id = $this->request->getPost('id');
+            try{
+                $result = Roles::findFirst($id)->delete();
+                if(!$result){
+                    return $this->response->setJsonContent(['status='>0,'msg'=>'删除失败']);
+                }else{
+                    return $this->response->setJsonContent(['status'=>1,'msg'=>'删除成功']);
+                }
+            }catch (\Exception $e){
+                return $this->response->setJsonContent(['status='>0,'msg'=>$e->getMessage()]);
+            }
         }
     }
 }

@@ -65,13 +65,8 @@ class RoleAdmin extends ModelBase
     }
 
     public function getRole($admin_id){
-        $role_set = array();$role_ids_set = array();
         $phql = "SELECT b.name,b.id FROM c:RoleAdmin a LEFT JOIN c:Roles b ON a.role_id = b.id WHERE admin_id = $admin_id";
         $roles = $this->getModelsManager()->executeQuery($phql);
-        foreach ($roles as $role){
-            array_push($role_set, $role->name);
-            array_push($role_ids_set, $role->id);
-        }
-        return array($role_set,implode(',', $role_ids_set));
+        return $roles->toArray();
     }
 }

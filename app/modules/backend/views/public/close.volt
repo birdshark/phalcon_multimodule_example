@@ -13,7 +13,7 @@
 <div class="middle-box text-center animated fadeInDown">
     <h1><i class="fa fa-{{ flag  }}"></i></h1>
     <h3 class="font-bold">{{ message  }}</h3>
-    <div>系统将在<span id="countDownSec">{{ $second or 5 }}</span>秒后自动关闭,如果不想等待,直接 <a id="href" href="javascript:close{{tab}}Frame()">点击这里</a></div>
+    <div>系统将在<span id="countDownSec">{{ second|default('5') }}</span>秒后自动关闭,如果不想等待,直接 <a id="href" href="javascript:close{{ tab|default('Win') }}Frame()">点击这里</a></div>
 </div>
 {% include "public/script.volt" %}
 <script>
@@ -22,7 +22,7 @@
         var interval = setInterval(function(){
             var time = --wait.innerHTML;
             if(time == 0) {
-                close{{tab}}Frame();
+                close{{ tab|default('Win') }}Frame();
                 clearInterval(interval);
             };
         }, 1000);

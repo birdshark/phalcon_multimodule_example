@@ -2,6 +2,11 @@
 
 namespace Application\Common\Models;
 
+use Phalcon\Validation;
+use Phalcon\Validation\Validator\PresenceOf;
+use Phalcon\Validation\Validator\StringLength;
+use Phalcon\Validation\Validator\Uniqueness;
+
 class Permissions extends ModelBase
 {
 
@@ -87,6 +92,15 @@ class Permissions extends ModelBase
         $this->hasMany('id', 'Application\Common\Models\PermissionRole', 'permission_id', ['alias' => 'PermissionRole']);
     }
 
+    public function validation()
+    {
+        $validator = new Validation();
+        $validator->add('name',new PresenceOf(['model'=>$this,'message'=>'请填写权限名称！']));
+        $validator->add('name',new Uniqueness(['model'=>$this,'message'=>'该权限已经存在！']));
+        $validator->add('name',new StringLength(['model'=>$this,'min' => 2,'messageMinimum'=>'名称长度大于2']));
+        return $this->validate($validator);
+    }
+
     /**
      * Returns table name mapped in the model.
      *
@@ -128,5 +142,4 @@ class Permissions extends ModelBase
         $parameters = array($condition,'limit'=>$limit,'offset'=>$offset,'select'=>$filed);
         return parent::find($parameters);
     }
-
 }

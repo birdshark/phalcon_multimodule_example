@@ -33,7 +33,7 @@
                             </div>
                         </step>
                         <h1>选择角色</h1>
-                        <step data-mode="async" data-url="/backend/backend/role">
+                        <step data-mode="async" data-url="/backend/admin/role">
                         </step>
                         <input type="hidden" name="{{ security.getTokenKey() }}" value="{{ security.getToken() }}">
                     </form>
@@ -101,7 +101,7 @@
                     shadeClose: true,
                     shade: 0.8,
                     area: ['80%', '80%'],
-                    content: '/backend/backend/pick?tab=Win', //iframe的url
+                    content: '/backend/admin/pick?tab=Win', //iframe的url
                 })
             })
         });
