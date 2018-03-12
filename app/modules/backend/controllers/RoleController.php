@@ -54,24 +54,21 @@ class RoleController extends ControllerBase
 
     public function editAction($id){
         if($this->request->isPost()){
-            $input = $this->request->all();
-            $validator = Role::validate($input);
-            if ($validator->fails()){
-                $messages = $validator->messages();
-                return view('backend.public.fails',['flag'=>'time','message'=>'修改失败!']);
+            $input = $this->request->getPost();
+            $roles = new Roles();
+            $result = $roles->save($input);
+            if (!$result){
+                $this->view->setVars(['flag'=>'time','message'=>'修改失败!']);
+                return $this->view->pick('public/fails');
             }else{
-                unset($input['_token']);
-                $where =array('id'=>$id);
-                $result = Role::roleUpdate($where,$input);
-                if($result){
-                    return view('backend.public.close',['flag'=>'check','message'=>'修改成功!']);
-                }else{
-                    return view('backend.public.jump',['flag'=>'time','message'=>'修改失败!']);
-                }
+                $this->view->setVars(['flag'=>'check','message'=>'修改失败!']);
+                return $this->view->pick('public/close');
+
             }
         }else{
-            $info = Role::findOrFail($id);
-            return view('backend.role.add',$info);
+            $info = Roles::findFirst($id);
+            $this->view->setVar('info',$info);
+            return $this->view->pick('role/add');
         }
     }
 

@@ -22,15 +22,15 @@
                 <input id="email" name="email" class="form-control" type="email" aria-required="true" aria-invalid="true" class="valid" value="{{ info.email }}">
             </div>
         </div>
-        <div class="form-group">
-            <label class="col-sm-3 control-label">性别：</label>
-            <div class="col-sm-8">
-                <div class="radio i-checks">
-                    <label><input type="radio" id="sex_1" value="1" name="sex" @if(info.sex == 1)checked=""@else @endif><i></i>男</label>
-                    <label><input type="radio" id="sex_2" value="2" name="sex" @if(info.sex == 2)checked=""@else @endif><i></i> 女 </label>
-                </div>
-            </div>
-        </div>
+        {#<div class="form-group">#}
+            {#<label class="col-sm-3 control-label">性别：</label>#}
+            {#<div class="col-sm-8">#}
+                {#<div class="radio i-checks">#}
+                    {#<label><input type="radio" id="sex_1" value="1" name="sex" {% if info.sex == 1 %}checked=""{% endif %}><i></i>男</label>#}
+                    {#<label><input type="radio" id="sex_2" value="2" name="sex" {% if info.sex == 2 %}checked=""{% endif %}><i></i> 女 </label>#}
+                {#</div>#}
+            {#</div>#}
+        {#</div>#}
         <div class="form-group">
             <label class="col-sm-3 control-label">密码：</label>
             <div class="col-sm-8">

@@ -102,7 +102,7 @@ class Admins extends ModelBase
     {
         $this->setSchema("test");
         $this->setSource("admins");
-        $this->hasMany('id', 'Application\Common\Models\RoleAdmin', 'admin_id', ['alias' => 'RoleAdmin']);
+//        $this->hasMany('id', 'Application\Common\Models\RoleAdmin', 'admin_id', ['alias' => 'RoleAdmin']);
     }
 
     /**
@@ -138,9 +138,9 @@ class Admins extends ModelBase
     }
 
     public function getRole(){
-        $phql = "SELECT * FROM c:RoleAdmin WHERE c:RoleAdmin.admin_id = 1";
+        $phql = "SELECT * FROM c:RoleAdmin as a WHERE a.admin_id = 1";
         $result = $this->getModelsManager()->executeQuery($phql);
-        return $result;
+        return $result->toArray();
     }
 
     public static function adminCount($where){

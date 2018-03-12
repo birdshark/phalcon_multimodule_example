@@ -2,15 +2,15 @@
 <div class="row">
     <div class="form-group">
         <div class="col-sm-10">
-            @foreach($admin_roles as $admin_role)
-                <input type="hidden" name="old_role_ids[]" value="{{ $admin_role }}">
-            @endforeach
-            @foreach($roles as $role)
+            {% for admin_role in admin_roles %}
+                <input type="hidden" name="old_role_ids[]" value="{{ admin_role }}">
+            {% endfor %}
+            {% for role in roles %}
                 <label class="checkbox-inline i-checks">
-                    <input type="checkbox" name="role_ids[]" value="{{ $role->id }}" @if(in_array($role->id,$admin_roles))) checked="" @endif >
-                    {{ $role->name }}
+                    <input type="checkbox" name="role_ids[]" value="{{ role.id }}" {% if in_array(role.id,admin_roles) %} checked="" {% endif %}>
+                    {{ role.name }}
                 </label>
-            @endforeach
+            {% endfor %}
         </div>
     </div>
 </div>
