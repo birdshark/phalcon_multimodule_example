@@ -1,6 +1,6 @@
 {% extends "_layouts/add.volt" %}
 {% block style %}
-    <link href="/admin/assets/css/plugins/iCheck/custom.css" rel="stylesheet">
+    <link href="/backend/assets/css/plugins/iCheck/custom.css" rel="stylesheet">
 {% endblock %}
 {% block form %}
     <form class="form-horizontal m-t" id="aeForm" method="post">
@@ -54,7 +54,7 @@
     </form>
 {% endblock %}
 {% block script %}
-    <script src="/admin/assets/js/plugins/iCheck/icheck.min.js"></script>
+    <script src="/backend/assets/js/plugins/iCheck/icheck.min.js"></script>
     <script>
         $().ready(function() {
             var e = "<i class='fa fa-times-circle'></i> ";
