@@ -8,25 +8,27 @@
 // +----------------------------------------------------------------------
 // | Author: Bird Shark <birdmanangle@gmail.com>
 // +----------------------------------------------------------------------
-// | Date: 3/9/2018 10:27 PM
+// | Date: 3/12/2018 10:08 AM
 // +----------------------------------------------------------------------
 
+namespace Application\Common\Models;
 
-/**
- * 获取数组中的列
- */
-if(!function_exists('pluck')){
-    function pluck($array = array(),$fields = array()){
-        $result = array();
-        if(count($fields) == 1){
-            foreach ($array as $key => $value){
-                $result[] = $value[$fields[0]];
-            }
-        }else{
-            foreach ($array as $key => $value){
-                $result[] = array_intersect_key($value,$fields);
+use Phalcon\Mvc\Model;
+
+abstract class ModelBase extends Model{
+    protected static function whereFormat($where){
+        $whereArray = array();
+        $operate = ' AND ';
+        foreach ($where as $key => $value){
+            if($value != ''){
+                if(is_string($value)){
+                    $whereArray[] = $key . ' = ' . $value;
+                }
+                if(is_array($value)){
+                    //TODO parse ....
+                }
             }
         }
-        return $result;
+        return implode($operate, $whereArray);
     }
 }

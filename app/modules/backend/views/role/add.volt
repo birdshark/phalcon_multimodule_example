@@ -1,22 +1,22 @@
-@extends('backend._layouts.add')
-@section('form')
+{% extends '_layouts/add.volt' %}
+{% block form %}
     <form class="form-horizontal m-t" id="aeForm" method="post">
         <div class="form-group">
             <label class="col-sm-3 control-label">角色名称：</label>
             <div class="col-sm-8">
-                <input id="name" name="name" class="form-control" type="text" aria-required="true" aria-invalid="true" class="valid" value="{{ @$name }}">
+                <input id="name" name="name" class="form-control" type="text" aria-required="true" aria-invalid="true" class="valid" value="{{ info.name }}">
             </div>
         </div>
         <div class="form-group">
             <label class="col-sm-3 control-label">显示名称：</label>
             <div class="col-sm-8">
-                <input id="display_name" name="display_name" class="form-control" type="text" aria-required="true" aria-invalid="true" class="valid" value="{{ @$display_name }}">
+                <input id="display_name" name="display_name" class="form-control" type="text" aria-required="true" aria-invalid="true" class="valid" value="{{ info.display_name }}">
             </div>
         </div>
         <div class="form-group">
             <label class="col-sm-3 control-label">描述：</label>
             <div class="col-sm-8">
-                <textarea id="description" name="description" class="form-control" required="" aria-required="true">{{ @$description }}</textarea>
+                <textarea id="description" name="description" class="form-control" required="" aria-required="true">{{ info.description }}</textarea>
             </div>
         </div>
         <div class="form-group">
@@ -24,11 +24,11 @@
                 <button class="btn btn-w-m btn-primary" type="submit">提交</button>
             </div>
         </div>
-        <input type="hidden" name="_token" value="{{ csrf_token() }}">
-        <input type="hidden" name="id" value="{{ @$id }}">
+        <input type="hidden" name="{{ security.getTokenKey() }}" value="{{ security.getToken() }}">
+        <input type="hidden" name="id" value="{{ info.id }}">
     </form>
-@stop
-@section('script')
+{% endblock %}
+{% block script %}
     <script>
         $().ready(function() {
             var e = "<i class='fa fa-times-circle'></i> ";
@@ -48,4 +48,4 @@
             })
         });
     </script>
-@stop
+{% endblock %}

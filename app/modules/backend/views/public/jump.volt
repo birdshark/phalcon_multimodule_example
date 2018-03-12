@@ -13,7 +13,7 @@
 <div class="middle-box text-center animated fadeInDown">
     <h1><i class="fa fa-{{ flag }}"></i></h1>
     <h3 class="font-bold">{{ message }}</h3>
-    <div>系统将在<span id="countDownSec">5</span>秒后自动跳转,如果不想等待,直接 <a id="href" href="{{ abc(jumpUrl,'') }}">点击这里</a></div>
+    <div>系统将在<span id="countDownSec">5</span>秒后自动跳转,如果不想等待,直接 <a id="href" href="{{ jumpUrl|default('') }}">点击这里</a></div>
 </div>
 {% include "public/script.volt" %}
 <script>

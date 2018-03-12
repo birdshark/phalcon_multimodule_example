@@ -78,7 +78,6 @@ class SecurityPlugin extends Plugin{
         }else{
             $acl = unserialize(file_get_contents(APP_PATH."/modules/backend/security/acl.data"));
         }
-
         return $acl;
     }
 }

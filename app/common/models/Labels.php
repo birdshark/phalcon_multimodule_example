@@ -2,7 +2,7 @@
 
 namespace Application\Common\Models;
 
-class Labels extends \Phalcon\Mvc\Model
+class Labels extends ModelBase
 {
 
     /**

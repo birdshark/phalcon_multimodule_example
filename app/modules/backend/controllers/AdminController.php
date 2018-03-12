@@ -55,7 +55,17 @@ class AdminController extends ControllerBase
     }
 
     public function roleAction(){
-
+        if($this->request->ajax()){
+            $aid = $this->request->get('aid',null,0);
+            $roles = Role::all(['id', 'name', 'display_name']);
+            $admin_roles = Admins::adminRoles($aid)->pluck('id')->all();
+            return Response::view('backend.admin.role',['admin_roles'=>$admin_roles,'roles'=>$roles]);
+        }else{
+            $aid = $this->request->get('aid',null,0);
+            $roles = Role::all(['id', 'name', 'display_name']);
+            $admin_roles = Admin::adminRoles($aid);
+            return view('backend.admin.role',['admin_roles'=>$admin_roles,'roles'=>$roles]);
+        }
     }
 
 }

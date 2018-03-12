@@ -1,6 +1,6 @@
-@extends('backend._layouts.list')
+{% extends "_layouts/list.volt" %}
 
-@section('table')
+{% block table %}
     <table id="table" data-mobile-responsive="true"
            data-toggle="table"
            data-toolbar="#exampleToolbar"
@@ -21,7 +21,7 @@
            data-show-footer="false"
            data-side-pagination="server"
            data-url="/backend/permission/list"
-            {{--data-response-handler="responseHandler"--}}
+           {#data-response-handler="responseHandler"#}
             >
         <thead>
         <tr>
@@ -35,9 +35,9 @@
         </tr>
         </thead>
     </table>
-@stop
-@section('controller','permission')
-@section('script')
+{% endblock %}
+{% block controller %}permission{% endblock %}
+{% block script %}
     <script>
         var showOrHideFormatter = function(value, row, index) {
             var checked ='';
@@ -63,4 +63,4 @@
             });
         });
     </script>
-@stop
+{% endblock %}

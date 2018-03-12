@@ -2,7 +2,7 @@
 
 namespace Application\Common\Models;
 
-class RoleAdmin extends \Phalcon\Mvc\Model
+class RoleAdmin extends ModelBase
 {
 
     /**

@@ -5,7 +5,7 @@ namespace Application\Common\Models;
 use Phalcon\Validation;
 use Phalcon\Validation\Validator\Email as EmailValidator;
 
-class Users extends \Phalcon\Mvc\Model
+class Users extends ModelBase
 {
 
     /**

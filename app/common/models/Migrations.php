@@ -2,7 +2,7 @@
 
 namespace Application\Common\Models;
 
-class Migrations extends \Phalcon\Mvc\Model
+class Migrations extends ModelBase
 {
 
     /**

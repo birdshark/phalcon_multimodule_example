@@ -2,7 +2,7 @@
 
 namespace Application\Common\Models;
 
-class PermissionRole extends \Phalcon\Mvc\Model
+class PermissionRole extends ModelBase
 {
 
     /**

@@ -55,7 +55,16 @@ class PermissionController extends ControllerBase
     }
 
     public function listAction(){
-
+        if($this->request->isAjax()){
+            $where = array();
+            $offset = $this->request->get('offset',null,0);
+            $limit = $this->request->get('limit',null,5);
+            $filed = array('*');
+            $total = Permissions::permissionCount($where);
+            $rows = Permissions::permissionList($filed,$where,$offset,$limit);
+            $data = array( 'total'=> $total , 'rows'=> $rows  );
+            return $this->response->setJsonContent($data);
+        }
     }
 
 }

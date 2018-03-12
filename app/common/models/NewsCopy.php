@@ -2,7 +2,7 @@
 
 namespace Application\Common\Models;
 
-class NewsCopy extends \Phalcon\Mvc\Model
+class NewsCopy extends ModelBase
 {
 
     /**

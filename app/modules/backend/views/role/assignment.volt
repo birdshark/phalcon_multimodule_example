@@ -1,8 +1,8 @@
-@extends('backend._layouts.steps')
-@section('style')
-    <link href="/admin/assets/css/plugins/iCheck/custom.css" rel="stylesheet">
-@endsection
-@section('content')
+{% extends '_layouts/steps.volt' %}
+{% block style %}
+    <link href="/backend/assets/css/plugins/iCheck/custom.css" rel="stylesheet">
+{% endblock %}
+{% block content %}
     <div class="row">
         <div class="col-sm-12">
             <div class="ibox">
@@ -10,7 +10,7 @@
                     <h2>
                         管理员角色分配
                     </h2>
-                    <form id="form" action="{{ action('Backend\RoleController@roleAssignment') }}" class="wizard-big" method="post">
+                    <form id="form" action="{{ url('/backend/role/assignment') }}" class="wizard-big" method="post">
                         <h1>选择管理员</h1>
                         <step>
                             <h2>管理员列表</h2>
@@ -33,19 +33,19 @@
                             </div>
                         </step>
                         <h1>选择角色</h1>
-                        <step data-mode="async" data-url="/backend/admin/role">
+                        <step data-mode="async" data-url="/backend/backend/role">
                         </step>
-                        {!! csrf_field() !!}
+                        <input type="hidden" name="{{ security.getTokenKey() }}" value="{{ security.getToken() }}">
                     </form>
                 </div>
             </div>
         </div>
 
     </div>
-@endsection
-@section('script')
-    <script src="/admin/assets/js/plugins/layer/layer.min.js"></script>
-    <script src="/admin/assets/js/plugins/iCheck/icheck.min.js"></script>
+{% endblock %}
+{% block script %}
+    <script src="/backend/assets/js/plugins/layer/layer.min.js"></script>
+    <script src="/backend/assets/js/plugins/iCheck/icheck.min.js"></script>
     <script>
 
         $(document).ready(function () {
@@ -101,11 +101,9 @@
                     shadeClose: true,
                     shade: 0.8,
                     area: ['80%', '80%'],
-                    content: '/backend/admin/pick?tab=Win', //iframe的url
+                    content: '/backend/backend/pick?tab=Win', //iframe的url
                 })
             })
         });
-
-
     </script>
-@endsection
+{% endblock %}

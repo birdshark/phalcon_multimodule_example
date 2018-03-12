@@ -7,7 +7,7 @@
             {% endfor %}
             {% for permission in permissions%}
                 <label class="checkbox-inline i-checks">
-                    <input type="checkbox" name="permission_ids[]" value="{{ permission.id }}" @if(in_array(permission.id,perms_ids))) checked="" @endif>
+                    <input type="checkbox" name="permission_ids[]" value="{{ permission.id }}" {% if in_array(permission.id,perms_ids) %} checked="" {% endif %}>
                     {{ permission.display_name }}
                 </label>
             {% endfor %}

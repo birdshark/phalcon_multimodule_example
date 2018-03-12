@@ -2,7 +2,7 @@
 
 namespace Application\Common\Models;
 
-class Roles extends \Phalcon\Mvc\Model
+class Roles extends ModelBase
 {
 
     /**
@@ -91,5 +91,20 @@ class Roles extends \Phalcon\Mvc\Model
     {
         return parent::findFirst($parameters);
     }
+
+    public static function roleCount($where){
+        return parent::count($where);
+    }
+
+
+    public static function roleList($filed,$where,$offset,$limit){
+        $parameters  = array(
+            self::whereFormat($where),
+            'offset'=>$offset,
+            'limit'=>$limit,
+        );
+        return parent::find($parameters);
+    }
+
 
 }

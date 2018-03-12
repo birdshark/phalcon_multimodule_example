@@ -2,7 +2,7 @@
 
 namespace Application\Common\Models;
 
-class Gallery extends \Phalcon\Mvc\Model
+class Gallery extends ModelBase
 {
 
     /**

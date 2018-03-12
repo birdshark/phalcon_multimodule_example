@@ -2,7 +2,7 @@
 
 namespace Application\Common\Models;
 
-class Types extends \Phalcon\Mvc\Model
+class Types extends ModelBase
 {
 
     /**

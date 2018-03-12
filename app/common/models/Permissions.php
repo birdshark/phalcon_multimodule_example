@@ -2,7 +2,7 @@
 
 namespace Application\Common\Models;
 
-class Permissions extends \Phalcon\Mvc\Model
+class Permissions extends ModelBase
 {
 
     /**
@@ -117,6 +117,16 @@ class Permissions extends \Phalcon\Mvc\Model
     public static function findFirst($parameters = null)
     {
         return parent::findFirst($parameters);
+    }
+
+    public static function permissionCount($where){
+        return parent::count($where);
+    }
+
+    public static function permissionList($filed,$where,$offset,$limit){
+        $condition = self::whereFormat($where);
+        $parameters = array($condition,'limit'=>$limit,'offset'=>$offset,'select'=>$filed);
+        return parent::find($parameters);
     }
 
 }

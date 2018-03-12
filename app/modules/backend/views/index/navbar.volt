@@ -3,7 +3,7 @@
         <ul class="nav" id="side-menu">
             <li class="nav-header">
                 <div class="dropdown profile-element">
-                    <span><img alt="image" class="img-circle" src="{{  abc(session.get('auth')['avatar'],'/backend/img/profile_small.jpg') }}"/></span>
+                    <span><img alt="image" class="img-circle" src="{{  session.get('auth')['avatar']|default('/backend/img/profile_small.jpg') }}"/></span>
                     <a data-toggle="dropdown" class="dropdown-toggle" href="#">
                             <span class="clear">
                                 <span class="block m-t-xs">
@@ -23,7 +23,7 @@
             {% for menu in menus %}
                 <li class="{{ menu['mode'] }}">
                     <a href="#">
-                        <i class="fa {{ abc(menu['flag'],'fa-user') }}"></i>
+                        <i class="fa {{ menu['flag']|default('fa-user') }}"></i>
                         <span class="nav-label">{{ menu['section'] }}管理</span>
                         <span class="fa arrow"></span>
                     </a>

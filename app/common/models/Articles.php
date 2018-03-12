@@ -2,7 +2,7 @@
 
 namespace Application\Common\Models;
 
-class Articles extends \Phalcon\Mvc\Model
+class Articles extends ModelBase
 {
 
     /**

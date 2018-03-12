@@ -1,6 +1,5 @@
-@extends('backend._layouts.list')
-
-@section('table')
+{% extends '_layouts/list.volt' %}
+{% block table %}
     <table id="table" data-mobile-responsive="true"
            data-toggle="table"
            data-toolbar="#exampleToolbar"
@@ -32,7 +31,7 @@
         </tr>
         </thead>
     </table>
-@stop
-@section('controller','role')
-@section('script')
-@stop
+{% endblock %}
+{% block controller %}role{% endblock %}
+{% block script %}
+{% endblock %}
