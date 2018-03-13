@@ -111,5 +111,19 @@ class Roles extends ModelBase
         return parent::find($parameters)->toArray();
     }
 
+    public function detachPermissions($where){
+        array_push($where, array('role_id','=',$this->id));
+        $where = self::whereFormat($where);
+        return PermissionRole::find($where)->delete();
+    }
 
+    public function attachPermissions($permissions){
+        $result = array();
+        foreach ($permissions as $permission){
+            $permission_role = new PermissionRole();
+            $data = array('role_id'=>$this->id,'permission_id'=>$permission);
+            $result[] = $permission_role->create($data);
+        }
+        return $result;
+    }
 }

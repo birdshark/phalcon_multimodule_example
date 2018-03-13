@@ -137,9 +137,17 @@ class Permissions extends ModelBase
         return parent::count($where);
     }
 
-    public static function permissionList($filed,$where,$offset,$limit){
-        $condition = self::whereFormat($where);
-        $parameters = array($condition,'limit'=>$limit,'offset'=>$offset,'select'=>$filed);
-        return parent::find($parameters);
+    public static function permissionList($filed = '* ',$where = array(),$offset = null,$limit = null){
+        $parameters = array();
+        if($where){
+            $parameters[] = self::whereFormat($where);
+        }
+        if($offset != null){
+            $parameters['offset'] = $offset;
+        }
+        if($limit != null){
+            $parameters['limit'] = $limit;
+        }
+        return parent::find($parameters)->toArray();
     }
 }

@@ -44,6 +44,16 @@
                 <span class="help-block m-b-none"><i class="fa fa-info-circle"></i> 请再次输入您的密码</span>
             </div>
         </div>
+
+        <div class="form-group">
+            <label class="col-sm-3 control-label">头像：</label>
+            <div class="col-sm-8">
+                <div class="input-group m-b">
+                    <span class="input-group-addon"><i class="fa fa-image"></i></span>
+                    <input type="file" class="form-control" accept="image/*">
+                </div>
+            </div>
+        </div>
         <div class="form-group">
             <div class="col-sm-8 col-sm-offset-3">
                 <button class="btn btn-w-m btn-primary" type="submit">提交</button>
@@ -51,6 +61,7 @@
         </div>
         <input type="hidden" name="{{ security.getTokenKey() }}" value="{{ security.getToken() }}">
         <input type="hidden" name="id" value="{{ info.id }}">
+        <input type="hidden" name="avatar" value="{{ info.avatar }}">
     </form>
 {% endblock %}
 {% block script %}

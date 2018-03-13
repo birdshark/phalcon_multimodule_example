@@ -27,17 +27,23 @@ class PermissionController extends ControllerBase
 
     public function assignmentAction(){
         if($this->request->isAjax()){
-            $roles = Roles::find(['id', 'name', 'display_name']);
-            return view('backend.permission.assignment', ['roles' => $roles]);
+            $roles = Roles::find();
+            $this->view->setVars(['roles' => $roles]);
+            $this->view->pick('permission/assignment');
         }
         elseif($this->request->isPost()) {
             $role_id = $this->request->get('role_id',null,0);
-            $permission_ids = $this->request->get('role_id',null,array());
-            $old_perms_ids = $this->request->get('role_id',null,array());
+            $permission_ids = $this->request->get('permission_ids',null,array());
+            $old_perms_ids = $this->request->get('old_perms_ids',null,array());
             $role = Roles::findFirst($role_id);
-            $permissions = Permissions::find('id',$permission_ids);
-            $old_permissions = Permissions::whereIn('id',$old_perms_ids);
-            return view('backend.public.jump',['flag'=>'smile-o','message'=>'修改成功!']);
+            $old_permissions = Permissions::permissionList('*',array('id','in',$old_perms_ids));
+            $role->detachPermissions(array(array('permission_id','in',pluck($old_permissions,array('id')))));
+            if(!empty($permission_ids)){
+                $permissions = Permissions::permissionList('*',array('id','in',$permission_ids));
+                $role->attachPermissions(pluck($permissions,array('id')));
+            }
+            $this->view->setVars(['flag'=>'smile-o','message'=>'修改成功!']);
+            return $this->view->pick('public/jump');
         }else{
             $roles = Roles::find();
             $this->view->setVar('roles', $roles);

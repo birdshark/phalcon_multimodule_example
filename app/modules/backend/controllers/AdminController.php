@@ -39,6 +39,10 @@ class AdminController extends ControllerBase
 
     public function addAction(){
         if($this->request->isPost()){
+            if (!$this->security->checkToken()){
+                $this->view->setVars(['flag'=>'time','message'=>'TOKEN错误','jumpUrl'=>'']);
+                return $this->view->pick('public/jump');
+            }
             $input = $this->request->getPost();
             $input['password'] = $this->security->hash($input['password']);
             $admins = new Admins();
@@ -47,9 +51,7 @@ class AdminController extends ControllerBase
                 $first_message = array_shift($admins->getMessages());
                 $this->view->setVars(['flag'=>'time','message'=>$first_message->getMessage(),'jumpUrl'=>'']);
             }else{
-                if ($this->security->checkToken()) {
-                    $this->view->setVars(['flag'=>'time','message'=>'添加成功','jumpUrl'=>'']);
-                }
+                $this->view->setVars(['flag'=>'time','message'=>'添加成功','jumpUrl'=>'']);
             }
             return $this->view->pick('public/jump');
         }else{
