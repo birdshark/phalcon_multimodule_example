@@ -18,8 +18,8 @@ return new \Phalcon\Config([
         'charset'  => 'utf8',
         'port'  => 3307,
     ],
-    'sql_debug' => true,
-    'error_log' => true,
+    'sql_debug' => false,
+    'error_log' => false,
 
     'application' => [
         'appDir'         => APP_PATH . '/',
