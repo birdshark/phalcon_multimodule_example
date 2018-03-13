@@ -12,10 +12,14 @@
 // +----------------------------------------------------------------------
 
 
-/**
- * 获取数组中的列
- */
+
 if(!function_exists('pluck')){
+    /**
+     * 获取数组中某列
+     * @param array $array
+     * @param array $fields
+     * @return array
+     */
     function pluck($array = array(),$fields = array()){
         $result = array();
         if(count($fields) == 1){

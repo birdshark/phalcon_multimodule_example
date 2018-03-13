@@ -1,5 +1,6 @@
 <?php
 namespace Application\Modules\Backend\Controllers;
+
 use Application\Common\Models\Admins;
 use Application\Common\Models\Permissions;
 use Application\Common\Models\Roles;
@@ -61,7 +62,7 @@ class RoleController extends ControllerBase
                 $this->view->setVars(['flag'=>'time','message'=>'修改失败!']);
                 return $this->view->pick('public/fails');
             }else{
-                $this->view->setVars(['flag'=>'check','message'=>'修改失败!']);
+                $this->view->setVars(['flag'=>'check','message'=>'修改成功!']);
                 return $this->view->pick('public/close');
 
             }
@@ -81,17 +82,18 @@ class RoleController extends ControllerBase
             $old_role_ids = $this->request->get('old_role_ids',null,array());
             $aid = $this->request->get('admin_id',null,0);
             $admin =  Admins::findFirst($aid);
-            //detach old role
-            $old_roles = Roles::whereIn('id',$old_role_ids)->get(['id']);
-
-            $roles = Role::whereIn('id',$role_ids)->get(['id']);
-            if($old_role_ids){
-                $admin->detachRoles($old_roles);
+            $old_roles = Roles::roleList('*',array('id','in',$old_role_ids));
+            $old_roles = pluck($old_roles,array('id'));
+            $roles = Roles::roleList('*',array('id','in',$role_ids));
+            $roles = pluck($roles,array('id'));
+            if($old_roles){
+                $admin->detachRoles(array(array('role_id','in',$old_roles)));
                 $admin->attachRoles($roles);
             }else{
                 $admin->attachRoles($roles);
             }
-            return view('backend.public.jump',['flag'=>'smile-o','message'=>'修改成功!']);
+            $this->view->setVars(['flag'=>'smile-o','message'=>'修改成功!']);
+            return $this->view->pick('public/jump');
 
         }else{
             $roles = Roles::find();

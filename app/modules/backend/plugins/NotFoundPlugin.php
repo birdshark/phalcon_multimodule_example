@@ -21,7 +21,7 @@ use Phalcon\Mvc\User\Plugin;
 class NotFoundPlugin extends Plugin{
     
     public function beforeException(Event $event,Dispatcher $dispatcher,$exception){
-        var_dump($exception->getMessage());
+        var_dump($exception->getTraceAsString());
         if ($exception instanceof DispatchException) {
             $dispatcher->forward(['controller'=>'index','action'=>'show404']);
             return false;

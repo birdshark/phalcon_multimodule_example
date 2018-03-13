@@ -153,4 +153,19 @@ class Admins extends ModelBase
         return parent::find($parameters);
     }
 
+    public function detachRoles($parameters){
+        array_push($parameters, array('admin_id','=',$this->id));
+        $where = self::whereFormat($parameters);
+        return RoleAdmin::find($where)->delete();
+    }
+
+    public function attachRoles($roles){
+        foreach ($roles  as $role) {
+            $role_admin = new RoleAdmin();
+            $data = array('admin_id'=>$this->id,'role_id'=>$role);
+            $result[] = $role_admin->create($data);
+        }
+        return $result;
+    }
+
 }

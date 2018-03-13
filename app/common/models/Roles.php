@@ -97,13 +97,18 @@ class Roles extends ModelBase
     }
 
 
-    public static function roleList($filed,$where,$offset,$limit){
-        $parameters  = array(
-            self::whereFormat($where),
-            'offset'=>$offset,
-            'limit'=>$limit,
-        );
-        return parent::find($parameters);
+    public static function roleList($filed,$where = array(),$offset = null ,$limit = null ){
+        $parameters = array();
+        if($where){
+            $parameters[] = self::whereFormat($where);
+        }
+        if($offset != null){
+            $parameters['offset'] = $offset;
+        }
+        if($limit != null){
+            $parameters['limit'] = $limit;
+        }
+        return parent::find($parameters)->toArray();
     }
 
 
