@@ -13,15 +13,26 @@
 namespace Application\Modules\Backend\Plugins;
 
 use Phalcon\Events\Event;
+use Phalcon\Logger;
 use Phalcon\Mvc\Dispatcher;
+use Phalcon\Logger\Adapter\File as FileLogger;
 use Phalcon\Mvc\Dispatcher\Exception as DispatchException;
 use Phalcon\Mvc\Model\Exception as ModelException;
 use Phalcon\Mvc\User\Plugin;
 
 class NotFoundPlugin extends Plugin{
-    
+
+    private $config ;
+    public function __construct($config)
+    {
+        $this->config = $config;
+    }
+
     public function beforeException(Event $event,Dispatcher $dispatcher,$exception){
-        var_dump($exception->getTraceAsString());
+        if($this->config->error_log){
+            $logger = new FileLogger(__DIR__.'/../logs/error.log');
+            $logger->log($exception->getTraceAsString(),Logger::ERROR);
+        }
         if ($exception instanceof DispatchException) {
             $dispatcher->forward(['controller'=>'index','action'=>'show404']);
             return false;

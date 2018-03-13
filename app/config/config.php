@@ -19,6 +19,7 @@ return new \Phalcon\Config([
         'port'  => 3307,
     ],
     'sql_debug' => true,
+    'error_log' => true,
 
     'application' => [
         'appDir'         => APP_PATH . '/',

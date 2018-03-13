@@ -108,7 +108,7 @@ class Module implements ModuleDefinitionInterface
         };
 
         /**
-         * sql 日志控制
+         * 日志控制
          */
         if($config->sql_debug){
             $profilingSQLEvent = $this->registerProfilingSQLEvent($di);
@@ -120,7 +120,7 @@ class Module implements ModuleDefinitionInterface
         /**
          * 后端分发控制
          */
-        $backendDispatcherEvent = $this->registerBackendDispatcherEvent();
+        $backendDispatcherEvent = $this->registerBackendDispatcherEvent($di);
         $di['dispatcher']->setEventsManager($backendDispatcherEvent);
     }
 
@@ -153,9 +153,9 @@ class Module implements ModuleDefinitionInterface
     private function registerLoggingSQLEvent(){
         $eventsManager = new EventsManager();
         $logger = new FileLogger(__DIR__.'/logs/debug.log');
-        $eventsManager->attach('db', function ($event, $connection) use ($logger) {
+        $eventsManager->attach('db', function ($event,$connection) use ($logger) {
             if ($event->getType() == 'beforeQuery') {
-                $logger->log($connection->getSQLStatement(),Logger::INFO);
+                $logger->log($connection->getRealSQLStatement(),Logger::INFO);
             }
         });
         return $eventsManager;
@@ -165,14 +165,15 @@ class Module implements ModuleDefinitionInterface
      * 后台分发事件注册
      * @return EventsManager
      */
-    private function registerBackendDispatcherEvent(){
+    private function registerBackendDispatcherEvent(DiInterface $di){
+        $config = $di['config'];
         // Create an events manager
         $eventsManager = new EventsManager();
         // Listen for events produced in the dispatcher using the Security plugin
         $eventsManager->attach('dispatch:beforeExecuteRoute', new SecurityPlugin);
 
         // Handle exceptions and not-found exceptions using NotFoundPlugin
-        $eventsManager->attach('dispatch:beforeException', new NotFoundPlugin);
+        $eventsManager->attach('dispatch:beforeException', new NotFoundPlugin($config));
 
         return $eventsManager;
     }
