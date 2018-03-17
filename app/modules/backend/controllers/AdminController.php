@@ -11,18 +11,18 @@ class AdminController extends ControllerBase
     public function editAction($id){
         if($this->request->isPost()){
             $input = $this->request->getPost();
-            $admins = new Admins();
-            $result = $admins->save($input);
-            if(!$result){
-                $first_message = array_shift($admins->getMessages());
-                $this->view->setVars(['flag'=>'time','message'=>$first_message->getMessage(),'jumpUrl'=>'']);
-            }else{
-                if ($this->security->checkToken()) {
-                    $input['password'] = $this->security->hash($input['password']);
-                    $this->view->setVars(['flag'=>'time','message'=>'添加成功','jumpUrl'=>'']);
+            if ($this->security->checkToken()) {
+                $admins = new Admins();
+                $input['password'] = $this->security->hash($input['password']);
+                $result = $admins->save($input,Admins::$WhiteList);
+                if (!$result) {
+                    $first_message = array_shift($admins->getMessages());
+                    $this->view->setVars(['flag' => 'time', 'message' => $first_message->getMessage(), 'jumpUrl' => '']);
                 } else {
-                    $this->view->setVars(['flag'=>'time','message'=>'','jumpUrl'=>'']);
+                    $this->view->setVars(['flag' => 'time', 'message' => '更新成功', 'jumpUrl' => '']);
                 }
+            } else {
+                $this->view->setVars(['flag'=>'time','message'=>'TokenMissMatched','jumpUrl'=>'']);
             }
             return $this->view->pick('public/jump');
         }else{

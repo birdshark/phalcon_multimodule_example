@@ -1,5 +1,6 @@
 {
     "require": {
-        "phalcon/ide-stubs": "^3.3"
+        "phalcon/ide-stubs": "^3.3",
+        "imagine/imagine": "^0.7.1"
     }
 }

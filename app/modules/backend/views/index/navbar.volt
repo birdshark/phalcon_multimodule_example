@@ -3,7 +3,7 @@
         <ul class="nav" id="side-menu">
             <li class="nav-header">
                 <div class="dropdown profile-element">
-                    <span><img alt="image" class="img-circle" src="{{  session.get('auth')['avatar']|default('/backend/img/profile_small.jpg') }}"/></span>
+                    <span><img alt="image" width="64px" height="64px" class="img-circle" src="{{  session.get('auth')['avatar']|default('/backend/img/profile_small.jpg') }}"/></span>
                     <a data-toggle="dropdown" class="dropdown-toggle" href="#">
                             <span class="clear">
                                 <span class="block m-t-xs">

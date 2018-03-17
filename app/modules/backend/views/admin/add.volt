@@ -1,6 +1,35 @@
 {% extends "_layouts/add.volt" %}
 {% block style %}
     <link href="/backend/assets/css/plugins/iCheck/custom.css" rel="stylesheet">
+    <link href="/backend/assets/css/plugins/bootstrap-fileinput/fileinput.min.css" rel="stylesheet">
+    <link href="/backend/assets/css/plugins/jcrop/jquery.Jcrop.min.css" rel="stylesheet">
+    <style>
+        .kv-avatar .krajee-default.file-preview-frame,.kv-avatar .krajee-default.file-preview-frame:hover {
+            margin: 0;
+            padding: 0;
+            border: none;
+            box-shadow: none;
+            text-align: center;
+        }
+        .kv-avatar {
+            display: inline-block;
+        }
+        .kv-avatar .file-input {
+            display: table-cell;
+        }
+        .kv-reqd {
+            color: red;
+            font-family: monospace;
+            font-weight: normal;
+        }
+        .krajee-default.file-preview-frame .kv-file-content {
+            width: auto;
+            height: auto;
+        }
+        .file-zoom-content {
+            height:auto;
+        }
+    </style>
 {% endblock %}
 {% block form %}
     <form class="form-horizontal m-t" id="aeForm" method="post">
@@ -23,14 +52,24 @@
             </div>
         </div>
         {#<div class="form-group">#}
-            {#<label class="col-sm-3 control-label">性别：</label>#}
-            {#<div class="col-sm-8">#}
-                {#<div class="radio i-checks">#}
-                    {#<label><input type="radio" id="sex_1" value="1" name="sex" {% if info.sex == 1 %}checked=""{% endif %}><i></i>男</label>#}
-                    {#<label><input type="radio" id="sex_2" value="2" name="sex" {% if info.sex == 2 %}checked=""{% endif %}><i></i> 女 </label>#}
-                {#</div>#}
-            {#</div>#}
+        {#<label class="col-sm-3 control-label">性别：</label>#}
+        {#<div class="col-sm-8">#}
+        {#<div class="radio i-checks">#}
+        {#<label><input type="radio" id="sex_1" value="1" name="sex" {% if info.sex == 1 %}checked=""{% endif %}><i></i>男</label>#}
+        {#<label><input type="radio" id="sex_2" value="2" name="sex" {% if info.sex == 2 %}checked=""{% endif %}><i></i> 女 </label>#}
         {#</div>#}
+        {#</div>#}
+        {#</div>#}
+        <div class="form-group">
+            <label class="col-sm-3 control-label">头像：</label>
+            <div class="col-sm-8">
+                <div class="kv-avatar">
+                    <div class="file-loading">
+                        <input id="avatar" type="file">
+                    </div>
+                </div>
+            </div>
+        </div>
         <div class="form-group">
             <label class="col-sm-3 control-label">密码：</label>
             <div class="col-sm-8">
@@ -44,16 +83,6 @@
                 <span class="help-block m-b-none"><i class="fa fa-info-circle"></i> 请再次输入您的密码</span>
             </div>
         </div>
-
-        <div class="form-group">
-            <label class="col-sm-3 control-label">头像：</label>
-            <div class="col-sm-8">
-                <div class="input-group m-b">
-                    <span class="input-group-addon"><i class="fa fa-image"></i></span>
-                    <input type="file" class="form-control" accept="image/*">
-                </div>
-            </div>
-        </div>
         <div class="form-group">
             <div class="col-sm-8 col-sm-offset-3">
                 <button class="btn btn-w-m btn-primary" type="submit">提交</button>
@@ -62,13 +91,100 @@
         <input type="hidden" name="{{ security.getTokenKey() }}" value="{{ security.getToken() }}">
         <input type="hidden" name="id" value="{{ info.id }}">
         <input type="hidden" name="avatar" value="{{ info.avatar }}">
+        <input type="hidden" name="created_at" value="{{ info.created_at }}">
+        <input type="hidden" name="updated_at" value="{{ date('Y-m-d H:i:s') }}">
+        <input type="hidden" name="remember_token" value="{{ info.remember_token }}">
     </form>
+
+    <input hidden id="x" name="x">
+    <input hidden id="y" name="y">
+    <input hidden id="w" name="w">
+    <input hidden id="h" name="h">
+
 {% endblock %}
 {% block script %}
     <script src="/backend/assets/js/plugins/iCheck/icheck.min.js"></script>
+    <script src="/backend/assets/js/plugins/bootstrap-fileinput/fileinput.min.js"></script>
+    <script src="/backend/assets/js/plugins/jcrop/jquery.Jcrop.min.js"></script>
     <script>
+
+        {% if(info.avatar) %}
+        var initialPreview = ["<img width='213px' height='160px' src='{{ info.avatar }}' class='file-preview-image'>"];
+        {% else %}
+        var initialPreview = [];
+        {% endif %}
+
+        var initFileInput = function(target,post_to,data,allowedExtension,initialPreview,selected_callback,field){
+            var element = $('#'+ target);
+            element.fileinput({
+                uploadUrl:post_to,
+                uploadExtraData: data,
+                overwriteInitial: true,
+                showClose: false,
+                showCaption: false,
+                showUpload:false,
+                browseLabel: '',
+                maxFileCount:1,
+                removeLabel: '',
+                browseIcon: '<i class="glyphicon glyphicon-folder-open"></i>',
+                removeIcon: '<i class="glyphicon glyphicon-remove"></i>',
+                elErrorContainer: '#kv-avatar-errors-1',
+                msgErrorClass: 'alert alert-block alert-danger',
+                defaultPreviewContent: '<img src="/backend/img/profile_small.jpg">',
+                layoutTemplates: {main2: '{preview} {remove} {browse}'},
+                allowedFileExtensions: allowedExtension,
+                initialPreview: initialPreview,
+            }).on("filebatchselected", function(event, files) {
+                selected_callback(event, files);
+            }).on("fileuploaded", function(event, data) {
+                var response = data.response;
+                if(response.state == 1){
+                    $('input[name="'+field+'"]').val(response.data.file_name);
+                }
+            });
+        };
+        var cut = function(dom,show_callback,select_callback,clear_callback){
+            $(dom).Jcrop({
+                bgOpacity: 0.5,
+                bgColor: 'white',
+                addClass: 'jcrop-light',
+                onChange:   show_callback,
+                onSelect:   select_callback,
+                onRelease:  clear_callback
+            },function(){
+                api = this;
+                api.setSelect([0,0,0+150,0+150]);
+                api.setOptions({ bgFade: true });
+                api.ui.selection.addClass('jcrop-selection');
+            });
+        }
+
+        var api,params;
         $().ready(function() {
-            var e = "<i class='fa fa-times-circle'></i> ";
+            initFileInput('avatar','/backend/uploads/avatar',function () {
+                return {
+                    sw: $('.jcrop-holder').css('width'),
+                    sh: $('.jcrop-holder').css('height'),
+                    x: $('#x').val(),
+                    y: $('#y').val(),
+                    w: $('#w').val(),
+                    h: $('#h').val()
+                }
+            },["jpg", "png", "gif"],initialPreview,function (event, files) {
+                var dom = $('.file-preview-frame img')[0];
+                cut(dom,function (c) {
+                    $('#x').val(c.x);
+                    $('#y').val(c.y);
+                    $('#w').val(c.w);
+                    $('#h').val(c.h);
+                },function (c) {
+                    $('#x').val(c.x);
+                    $('#y').val(c.y);
+                    $('#w').val(c.w);
+                    $('#h').val(c.h);
+                },null);
+            },'avatar');
+            var e = "<i class='fa fa-times-circle'></i>";
             $("#aeForm").validate({
                 rules: {
                     name: {

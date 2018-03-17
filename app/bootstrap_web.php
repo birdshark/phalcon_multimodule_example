@@ -40,8 +40,11 @@ try {
     include APP_PATH . '/config/loader.php';
 
     /**
-     * Handle the request
+     * Include The composer autoloader .maybe it's not performance well
      */
+
+    include BASE_PATH . "/vendor/autoload.php";
+
     $application = new Application($di);
 
     /**

@@ -8,6 +8,7 @@ use Phalcon\Validation\Validator\Email as EmailValidator;
 class Admins extends ModelBase
 {
 
+    static $WhiteList = ['id','name','nick','email','password','avatar'];
     /**
      *
      * @var integer

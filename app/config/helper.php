@@ -34,3 +34,31 @@ if(!function_exists('pluck')){
         return $result;
     }
 }
+
+if(!function_exists('make_directory')){
+    /**
+     * @param $dir
+     * @return bool
+     */
+    function make_directory($dir){
+        if(is_dir($dir)){
+            return true;
+        }
+        if(mkdir($dir, 0777, true)){
+            return true;
+        } else {
+            return false;
+        }
+    }
+}
+
+
+if(!function_exists('cloud_uuid')){
+    /**
+     * 生成UUID
+     * @return string
+     */
+    function cloud_uuid(){
+        return strtolower(str_replace(array('+','=','/'), array('','',''), base64_encode(openssl_random_pseudo_bytes(24))));
+    }
+}
