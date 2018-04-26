@@ -46,7 +46,7 @@ class PermissionRoleMigration_100 extends Migration
                 ],
                 'references' => [
                     new Reference(
-                        'permission_role_permission_id_foreign',
+                        'permission_role_ibfk_1',
                         [
                             'referencedTable' => 'permissions',
                             'referencedSchema' => 'test',
@@ -57,7 +57,7 @@ class PermissionRoleMigration_100 extends Migration
                         ]
                     ),
                     new Reference(
-                        'permission_role_role_id_foreign',
+                        'permission_role_ibfk_2',
                         [
                             'referencedTable' => 'roles',
                             'referencedSchema' => 'test',
@@ -85,7 +85,11 @@ class PermissionRoleMigration_100 extends Migration
      */
     public function up()
     {
-
+        $this->batchInsert('permission_role', [
+                'permission_id',
+                'role_id'
+            ]
+        );
     }
 
     /**
@@ -95,7 +99,7 @@ class PermissionRoleMigration_100 extends Migration
      */
     public function down()
     {
-
+        $this->batchDelete('permission_role');
     }
 
 }

@@ -123,7 +123,18 @@ class ArticlesMigration_100 extends Migration
      */
     public function up()
     {
-
+        $this->batchInsert('articles', [
+                'id',
+                'title',
+                'content',
+                'article_label',
+                'article_type',
+                'description',
+                'created_at',
+                'updated_at',
+                'article_status'
+            ]
+        );
     }
 
     /**
@@ -133,7 +144,7 @@ class ArticlesMigration_100 extends Migration
      */
     public function down()
     {
-
+        $this->batchDelete('articles');
     }
 
 }

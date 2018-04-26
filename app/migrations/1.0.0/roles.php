@@ -93,7 +93,15 @@ class RolesMigration_100 extends Migration
      */
     public function up()
     {
-
+        $this->batchInsert('roles', [
+                'id',
+                'name',
+                'display_name',
+                'description',
+                'created_at',
+                'updated_at'
+            ]
+        );
     }
 
     /**
@@ -103,7 +111,7 @@ class RolesMigration_100 extends Migration
      */
     public function down()
     {
-
+        $this->batchDelete('roles');
     }
 
 }

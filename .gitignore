@@ -92,3 +92,7 @@ $RECYCLE.BIN/
 /vendor
 #cache directory
 /cache/volt
+
+# log file
+*.log
+README.md

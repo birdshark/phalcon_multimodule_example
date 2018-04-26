@@ -76,19 +76,11 @@ class AdminsMigration_100 extends Migration
                         ]
                     ),
                     new Column(
-                        'remember_token',
-                        [
-                            'type' => Column::TYPE_VARCHAR,
-                            'size' => 100,
-                            'after' => 'avatar'
-                        ]
-                    ),
-                    new Column(
                         'created_at',
                         [
                             'type' => Column::TYPE_TIMESTAMP,
                             'size' => 1,
-                            'after' => 'remember_token'
+                            'after' => 'avatar'
                         ]
                     ),
                     new Column(
@@ -121,7 +113,17 @@ class AdminsMigration_100 extends Migration
      */
     public function up()
     {
-
+        $this->batchInsert('admins', [
+                'id',
+                'name',
+                'email',
+                'password',
+                'nick',
+                'avatar',
+                'created_at',
+                'updated_at'
+            ]
+        );
     }
 
     /**
@@ -131,7 +133,7 @@ class AdminsMigration_100 extends Migration
      */
     public function down()
     {
-
+        $this->batchDelete('admins');
     }
 
 }

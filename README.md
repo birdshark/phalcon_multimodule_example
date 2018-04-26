@@ -30,7 +30,7 @@ Phalcon后台CMS
      --help                 显示帮助信息 [optional]
      
                                                      
-phalcon migration run --table=admins,roles,role_admin,article_comments,articles,gallery,labels,migrations,news,news_copy,password_resets,permission_role,permissions,types,users
+phalcon migration run --table=admins,roles,role_admin,permissions,permission_role,articles,gallery
 
 ##### apache配置
     <VirtualHost *:80>
@@ -49,3 +49,15 @@ phalcon migration run --table=admins,roles,role_admin,article_comments,articles,
 **目前开发工具的迁移功能尚有BUG，只能导入单行数据，所以基本数据后期会补上**
 
 
+##### 导入但行数据原因已经找到
+    `fgetcsv`方法对utf8编码文件识别不清。故在写文件时对文件已做编码转换
+    phalcon-devtools\scripts\Phalcon\Mvc\Model\Migration.php
+        ..............
+    432             foreach ($row as $key => $value) {
+    433                 $value = iconv('UTF-8','GBK',$value);
+    434                 if (isset($numericFields[$key])) {
+        ..............
+    868             $values = array_map(
+    869                 function ($value) {
+    870                     $value = iconv('GBK','UTF-8',$value);
+        ..............

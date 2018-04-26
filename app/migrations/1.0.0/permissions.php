@@ -118,7 +118,7 @@ class PermissionsMigration_100 extends Migration
                 ],
                 'options' => [
                     'TABLE_TYPE' => 'BASE TABLE',
-                    'AUTO_INCREMENT' => '43',
+                    'AUTO_INCREMENT' => '25',
                     'ENGINE' => 'InnoDB',
                     'TABLE_COLLATION' => 'utf8_general_ci'
                 ],
@@ -133,7 +133,19 @@ class PermissionsMigration_100 extends Migration
      */
     public function up()
     {
-
+        $this->batchInsert('permissions', [
+                'id',
+                'name',
+                'display_name',
+                'description',
+                'created_at',
+                'updated_at',
+                'section',
+                'flag',
+                'mode',
+                'show'
+            ]
+        );
     }
 
     /**
@@ -143,7 +155,7 @@ class PermissionsMigration_100 extends Migration
      */
     public function down()
     {
-
+        $this->batchDelete('permissions');
     }
 
 }

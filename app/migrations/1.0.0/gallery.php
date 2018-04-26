@@ -70,7 +70,7 @@ class GalleryMigration_100 extends Migration
                         'added_on',
                         [
                             'type' => Column::TYPE_TIMESTAMP,
-                            'default' => "current_timestamp()",
+                            'default' => "CURRENT_TIMESTAMP",
                             'notNull' => true,
                             'size' => 1,
                             'after' => 'height'
@@ -97,7 +97,15 @@ class GalleryMigration_100 extends Migration
      */
     public function up()
     {
-
+        $this->batchInsert('gallery', [
+                'id',
+                'path',
+                'size',
+                'width',
+                'height',
+                'added_on'
+            ]
+        );
     }
 
     /**
@@ -107,7 +115,7 @@ class GalleryMigration_100 extends Migration
      */
     public function down()
     {
-
+        $this->batchDelete('gallery');
     }
 
 }

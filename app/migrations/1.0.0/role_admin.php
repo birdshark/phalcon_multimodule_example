@@ -46,7 +46,7 @@ class RoleAdminMigration_100 extends Migration
                 ],
                 'references' => [
                     new Reference(
-                        'role_admin_admin_id_foreign',
+                        'role_admin_ibfk_1',
                         [
                             'referencedTable' => 'admins',
                             'referencedSchema' => 'test',
@@ -57,7 +57,7 @@ class RoleAdminMigration_100 extends Migration
                         ]
                     ),
                     new Reference(
-                        'role_admin_role_id_foreign',
+                        'role_admin_ibfk_2',
                         [
                             'referencedTable' => 'roles',
                             'referencedSchema' => 'test',
@@ -85,7 +85,11 @@ class RoleAdminMigration_100 extends Migration
      */
     public function up()
     {
-
+        $this->batchInsert('role_admin', [
+                'admin_id',
+                'role_id'
+            ]
+        );
     }
 
     /**
@@ -95,7 +99,7 @@ class RoleAdminMigration_100 extends Migration
      */
     public function down()
     {
-
+        $this->batchDelete('role_admin');
     }
 
 }
