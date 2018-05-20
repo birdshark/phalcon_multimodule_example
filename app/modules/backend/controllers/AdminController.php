@@ -12,9 +12,9 @@ class AdminController extends ControllerBase
         if($this->request->isPost()){
             $input = $this->request->getPost();
             if ($this->security->checkToken()) {
-                $admins = new Admins();
+                $admins = Admins::findFirst($input['id']);
                 $input['password'] = $this->security->hash($input['password']);
-                $result = $admins->save($input,Admins::$WhiteList);
+                $result = $admins->update($input,Admins::$WhiteList);
                 if (!$result) {
                     $first_message = array_shift($admins->getMessages());
                     $this->view->setVars(['flag' => 'time', 'message' => $first_message->getMessage(), 'jumpUrl' => '']);

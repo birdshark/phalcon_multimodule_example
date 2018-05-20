@@ -16,7 +16,7 @@ return new \Phalcon\Config([
         'password' => '',
         'dbname'   => 'test',
         'charset'  => 'utf8',
-        'port'  => 3307,
+        'port'  => 3306,
     ],
     'sql_debug' => false,
     'error_log' => false,
