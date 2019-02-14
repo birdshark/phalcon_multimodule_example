@@ -163,6 +163,7 @@ class Module implements ModuleDefinitionInterface
 
     /**
      * 后台分发事件注册
+     * @param DiInterface $di
      * @return EventsManager
      */
     private function registerBackendDispatcherEvent(DiInterface $di){

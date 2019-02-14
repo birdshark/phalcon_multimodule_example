@@ -47,6 +47,7 @@ class AuthController extends ControllerBase
                 $this->flash->error('admin not exist');
                 return $this->dispatcher->forward('auth/index');
             }
+
             if($this->security->checkHash($password, $admin->password)){
                 $roles_info = (new RoleAdmin())->getRole($admin->id);
                 $roles_info = array(pluck($roles_info,['name']),implode(',',pluck($roles_info,['id'])));
@@ -56,7 +57,7 @@ class AuthController extends ControllerBase
                 $this->flash->error('password not match');
             }
         }
-        return $this->dispatcher->forward(['controller'=>'auth','action'=>'index']);
+//        return $this->dispatcher->forward(['controller'=>'auth','action'=>'index']);
     }
 
     public function logoutAction(){

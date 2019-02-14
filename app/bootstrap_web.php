@@ -53,6 +53,7 @@ try {
     $application->registerModules([
         'frontend' => ['className' => 'Application\Modules\Frontend\Module'],
         'backend'  => ['className' => 'Application\Modules\Backend\Module'],
+        'api'  => ['className' => 'Application\Modules\Api\Module'],
     ]);
 
     /**

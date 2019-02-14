@@ -61,3 +61,10 @@ phalcon migration run --table=admins,roles,role_admin,permissions,permission_rol
     869                 function ($value) {
     870                     $value = iconv('GBK','UTF-8',$value);
         ..............
+        
+##### 创建新模块
+
+    phalcon module api --namespace=Application\Modules\Api
+    
+##### 创建新控制器
+    phalcon controller --name=Index --namespace=Application\Modules\Api\Controllers --output=D:\lab\phalcon_multimodule_example\app\modules\api\controllers 
