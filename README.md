@@ -67,4 +67,5 @@ phalcon migration run --table=admins,roles,role_admin,permissions,permission_rol
     phalcon module api --namespace=Application\Modules\Api
     
 ##### 创建新控制器
-    phalcon controller --name=Index --namespace=Application\Modules\Api\Controllers --output=D:\lab\phalcon_multimodule_example\app\modules\api\controllers 
+    phalcon controller --name=Index --namespace=Application\Modules\Api\Controllers --output=D:\lab\phalcon_multimodule_example\app\modules\api\controllers
+    phalcon controller --name=Admin --namespace=Application\Modules\Api\Controllers --output=D:\lab\phalcon_multimodule_example\app\modules\api\controllers 

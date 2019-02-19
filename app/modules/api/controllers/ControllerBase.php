@@ -35,8 +35,25 @@ abstract class ControllerBase extends Controller
 
     public function afterExecuteRoute()
     {
+        //设置返回头部，允许跨域
         $this->response->setHeader("Access-Control-Allow-Origin", "*");
         $this->response->setHeader("Access-Control-Allow-Headers", "*");
+    }
+
+    /**
+     * 获取参数
+     * @param string $name
+     * @param string $filters
+     * @param mixed $defaultValue
+     * @return mixed|null
+     */
+    public function getParams($name = null, $filters = null, $defaultValue = null){
+
+        if(function_exists($filters)){
+            $data = call_user_func($filters,$this->params[$name]);
+            return $data;
+        }
+        return isset($this->params[$name])?$this->params[$name]:$defaultValue;
     }
 }
 

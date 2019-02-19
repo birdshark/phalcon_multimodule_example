@@ -151,6 +151,12 @@ class Admins extends ModelBase
     public static function adminList($where,$offset,$limit,$fields){
         $parameters = $where;
         array_push($parameters, array('limit'=>$limit));
+        if($offset != null){
+            $parameters['offset'] = $offset;
+        }
+        if($limit != null){
+            $parameters['limit'] = $limit;
+        }
         return parent::find($parameters);
     }
 
