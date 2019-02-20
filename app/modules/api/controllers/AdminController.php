@@ -21,5 +21,37 @@ class AdminController extends ControllerBase
         }
     }
 
+    public function saveAction(){
+        if(!$this->request->isOptions()){
+            $input = $this->getParams();
+            //edit
+            if(isset($input['id'])){
+                $admins = Admins::findFirst($input['id']);
+                $input['password'] = $this->security->hash($input['password']);
+                $result = $admins->update($input,Admins::$WhiteList);
+                if (!$result) {
+                    $first_message = array_shift($admins->getMessages());
+                    $data = ['status' => 'ok', 'message' => $first_message->getMessage()];
+                } else {
+                    $data = ['status' => 'ok', 'message' => '更新成功'];
+                }
+            }
+            //add
+            else{
+                $input = $this->request->getPost();
+                $input['password'] = $this->security->hash($input['password']);
+                $admins = new Admins();
+                $result = $admins->create($input);
+                if(!$result){
+                    $first_message = array_shift($admins->getMessages());
+                    $data = ['status' => 'ok','message'=>$first_message->getMessage()];
+                }else{
+                    $data = ['status' => 'ok','message'=>'添加成功'];
+                }
+            }
+            return $this->response->setJsonContent($data);
+        }
+    }
+
 }
 

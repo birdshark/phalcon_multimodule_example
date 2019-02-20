@@ -49,6 +49,10 @@ abstract class ControllerBase extends Controller
      */
     public function getParams($name = null, $filters = null, $defaultValue = null){
 
+        if($name === null){
+            return $this->params;
+        }
+
         if(function_exists($filters)){
             $data = call_user_func($filters,$this->params[$name]);
             return $data;
