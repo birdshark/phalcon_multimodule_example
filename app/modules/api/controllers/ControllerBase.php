@@ -37,7 +37,7 @@ abstract class ControllerBase extends Controller
     {
         //设置返回头部，允许跨域
         $this->response->setHeader("Access-Control-Allow-Origin", "*");
-        $this->response->setHeader("Access-Control-Allow-Headers", "*");
+        $this->response->setHeader("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
     }
 
     /**

@@ -29,6 +29,7 @@ class TokenPlugin extends Plugin{
      * @param Dispatcher $dispatcher
      */
     public function beforeExecuteRoute(Event $event,Dispatcher $dispatcher){
+        
         $controller = $dispatcher->getControllerName();
         $action = $dispatcher->getActionName();
 

@@ -5,6 +5,7 @@ namespace Application\Common\Models;
 class Articles extends ModelBase
 {
 
+    static $WhiteList = ['id','content','description','article_label','article_type'];
     /**
      *
      * @var integer
@@ -110,5 +111,34 @@ class Articles extends ModelBase
     {
         return parent::findFirst($parameters);
     }
+
+    /**
+     * @param $where
+     * @return mixed
+     */
+    public static function articleCount($where){
+        return parent::count($where);
+    }
+
+    /**
+     * @param $where
+     * @param $offset
+     * @param $limit
+     * @param $fields
+     * @return \Phalcon\Mvc\Model\ResultsetInterface
+     */
+    public static function articleList($where,$offset,$limit,$fields){
+        $parameters = $where;
+        array_push($parameters, array('limit'=>$limit));
+        if($offset != null){
+            $parameters['offset'] = $offset;
+        }
+        if($limit != null){
+            $parameters['limit'] = $limit;
+        }
+        return parent::find($parameters);
+    }
+
+
 
 }

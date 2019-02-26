@@ -2,20 +2,21 @@
 
 namespace Application\Modules\Api\Controllers;
 
-use Application\Common\Models\Admins;
+use Application\Common\Models\Articles;
 
-class AdminController extends ControllerBase
+class ArticleController extends ControllerBase
 {
 
-    public function listAction(){
+    public function listAction()
+    {
         if(!$this->request->isOptions()){
             $page = $this->getParams('current',null,0);
             $limit = $this->getParams('limit',null,10);
             $offset = $limit*($page-1) ;
             $where = array();
             $fields = array('id','name','email');
-            $total = Admins::adminCount($where);
-            $rows = Admins::adminList($where,$offset,$limit,$fields);
+            $total = Articles::articleCount($where);
+            $rows = Articles::articleList($where,$offset,$limit,$fields);
             $data = array( 'total'=> $total , 'admins'=> $rows,'current' => $page, 'limit' => $limit);
             return $this->response->setJsonContent($data);
         }
@@ -26,11 +27,10 @@ class AdminController extends ControllerBase
             $input = $this->getParams();
             //edit
             if(isset($input['id'])){
-                $admins = Admins::findFirst($input['id']);
-                $input['password'] = $this->security->hash($input['password']);
-                $result = $admins->update($input,Admins::$WhiteList);
+                $article = Articles::findFirst($input['id']);
+                $result = $article->update($input,Articles::$WhiteList);
                 if (!$result) {
-                    $first_message = array_shift($admins->getMessages());
+                    $first_message = array_shift($article->getMessages());
                     $data = ['status' => 'ok', 'message' => $first_message->getMessage()];
                 } else {
                     $data = ['status' => 'ok', 'message' => '更新成功'];
@@ -38,11 +38,10 @@ class AdminController extends ControllerBase
             }
             //add
             else{
-                $input['password'] = $this->security->hash($input['password']);
-                $admins = new Admins();
-                $result = $admins->create($input);
+                $article = new Articles();
+                $result = $article->create($input);
                 if(!$result){
-                    $first_message = array_shift($admins->getMessages());
+                    $first_message = array_shift($article->getMessages());
                     $data = ['status' => 'ok','message'=>$first_message->getMessage()];
                 }else{
                     $data = ['status' => 'ok','message'=>'添加成功'];

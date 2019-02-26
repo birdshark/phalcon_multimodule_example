@@ -18,18 +18,29 @@ if(!function_exists('pluck')){
      * 获取数组中某列
      * @param array $array
      * @param array $fields
+     * @param string $index
      * @return array
      */
-    function pluck($array = array(),$fields = array()){
+    function pluck($array = array(),$fields = array(),$index = ''){
         $result = array();
         if(count($fields) == 1){
             foreach ($array as $key => $value){
-                $result[] = $value[$fields[0]];
+                if ($index) {
+                    $map_index = $value[$index];
+                    $result[$map_index] = $value[$fields[0]];
+                }else{
+                    $result[] = $value[$fields[0]];
+                }
             }
         }else{
-            foreach ($array as $key => $value){
-                $result[] = array_intersect_key($value,$fields);
-            }
+            foreach ($array as $key => $value)
+                if ($index) {
+                    $map_index = $value[$index];
+                    $result[$map_index] = array_intersect_key($value, $fields);
+                } else {
+
+                    $result[] = array_intersect_key($value, $fields);
+                }
         }
         return $result;
     }

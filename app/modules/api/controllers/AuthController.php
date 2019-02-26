@@ -38,7 +38,7 @@ class AuthController extends ControllerBase
                 foreach ($roles as $role){
                     $permissions = array_merge($all_permissions[$role],$permissions);
                 }
-                return $this->response->setJsonContent(['permissions'=>$permissions,'uid'=>$admin->id,'avatar'=>'http://'.$_SERVER['HTTP_HOST'].$admin->avatar,'nick'=>$admin->name,'server'=>$_SERVER]);
+                return $this->response->setJsonContent(['permissions'=>$permissions,'uid'=>$admin->id,'avatar'=>'http://'.$_SERVER['HTTP_HOST'].$admin->avatar,'nick'=>$admin->name,'server'=>$_SERVER, 'token'=> $token]);
             }else{
                 return $this->response->setJsonContent(['data'=>false]);
             }
