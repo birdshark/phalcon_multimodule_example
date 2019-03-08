@@ -17,7 +17,7 @@ class ArticleController extends ControllerBase
             $fields = array('id','name','email');
             $total = Articles::articleCount($where);
             $rows = Articles::articleList($where,$offset,$limit,$fields);
-            $data = array( 'total'=> $total , 'admins'=> $rows,'current' => $page, 'limit' => $limit);
+            $data = array( 'total'=> $total , 'admins'=> $rows,'current' => $page, 'limit' => $limit,'roles' => $this->deny);
             return $this->response->setJsonContent($data);
         }
     }

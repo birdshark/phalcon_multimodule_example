@@ -71,4 +71,5 @@ phalcon migration run --table=admins,roles,role_admin,permissions,permission_rol
     phalcon controller --name=Admin --namespace=Application\Modules\Api\Controllers --output=D:\lab\phalcon_multimodule_example\app\modules\api\controllers
     phalcon controller --name=Article --namespace=Application\Modules\Api\Controllers --output=D:\lab\phalcon_multimodule_example\app\modules\api\controllers
     phalcon controller --name=Label --namespace=Application\Modules\Api\Controllers --output=D:\lab\phalcon_multimodule_example\app\modules\api\controllers
-    phalcon controller --name=Type --namespace=Application\Modules\Api\Controllers --output=D:\lab\phalcon_multimodule_example\app\modules\api\controllers 
+    phalcon controller --name=Type --namespace=Application\Modules\Api\Controllers --output=D:\lab\phalcon_multimodule_example\app\modules\api\controllers
+    phalcon controller --name=Gallery --namespace=Application\Modules\Api\Controllers --output=D:\lab\phalcon_multimodule_example\app\modules\api\controllers 

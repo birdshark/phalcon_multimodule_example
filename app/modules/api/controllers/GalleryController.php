@@ -10,7 +10,9 @@ class GalleryController extends ControllerBase
     public function listAction()
     {
         if (!$this->request->isOptions()) {
-            $galleries = Gallery::find(['limit'=>4]);
+//            $page = $this->getParams('current',null,0);
+//            $limit = $this->getParams('limit',null,10);
+            $galleries = Gallery::find();
             return $this->response->setJsonContent(['data' => $galleries]);
         }
     }

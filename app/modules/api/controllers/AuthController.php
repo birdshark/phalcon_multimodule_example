@@ -6,6 +6,7 @@ use Application\Common\Models\Admins;
 use Application\Common\Models\PermissionRole;
 use Application\Common\Models\RoleAdmin;
 use Application\Common\Models\Roles;
+use Application\Modules\Api\Plugins\TokenPlugin;
 use Phalcon\Acl;
 use Phalcon\Acl\Adapter\Memory as AclList;
 
@@ -33,11 +34,12 @@ class AuthController extends ControllerBase
             if($this->security->checkHash($password, $admin->password)){
                 $roles_info = (new RoleAdmin())->getRole($admin->id);
                 $roles = pluck($roles_info,['name']);
-                $all_permissions = $this->getInitAcl();
+                $all_permissions = TokenPlugin::getInitAcl('permission');
                 $permissions = [];
                 foreach ($roles as $role){
                     $permissions = array_merge($all_permissions[$role],$permissions);
                 }
+                $token = auth_code($admin->id .'|'. implode(',',$roles),"auth_token");
                 return $this->response->setJsonContent(['permissions'=>$permissions,'uid'=>$admin->id,'avatar'=>'http://'.$_SERVER['HTTP_HOST'].$admin->avatar,'nick'=>$admin->name,'server'=>$_SERVER, 'token'=> $token]);
             }else{
                 return $this->response->setJsonContent(['data'=>false]);
@@ -46,41 +48,7 @@ class AuthController extends ControllerBase
     }
 
 
-    private function getInitAcl(){
-        if(!is_file(APP_PATH."/modules/api/security/all_permissions.data")) {
-            $acl = new AclList();
-            $acl->setDefaultAction(Acl::DENY);
-            $acl->setNoArgumentsDefaultAction(Acl::DENY);
-            $acl->addRole('guest');
-            $acl->addResource('auth', ['index', 'start']);
-            $acl->addResource('index', ['show404']);
-            $acl->allow('guest', 'auth', 'index');
-            $acl->allow('guest', 'auth', 'start');
-            $acl->allow('guest', 'index', 'show404');
-            $roles = Roles::find();
-            $all_permissions = [];
-            foreach ($roles as $role) {
-                $acl->addRole($role->name);
-                $permissions = (new PermissionRole())->getPermissions($role->id);
-                foreach ($permissions as $permission) {
-                    list($resource, $access) = explode('-', $permission->name);
-                    $acl->addResource($resource, $access);
-                    $acl->allow($role->name, $resource, $access);
-                    $all_permissions[$role->name][] = $permission->name;
-                }
-                $acl->addResource('auth', ['index', 'start']);
-                $acl->addResource('index', ['show404']);
-                $acl->allow($role->name, 'auth', 'index');
-                $acl->allow($role->name, 'auth', 'start');
-                $acl->allow('guest', 'index', 'show404');
-            }
-//            file_put_contents(APP_PATH."/modules/backend/security/acl.data", serialize($acl));
-            file_put_contents(APP_PATH."/modules/api/security/all_permissions.data", serialize($all_permissions));
-        }else{
-            $all_permissions = unserialize(file_get_contents(APP_PATH."/modules/api/security/all_permissions.data"));
-        }
-        return $all_permissions;
-    }
+
 
 }
 

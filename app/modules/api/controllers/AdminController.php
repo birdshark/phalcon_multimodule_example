@@ -7,6 +7,11 @@ use Application\Common\Models\Admins;
 class AdminController extends ControllerBase
 {
 
+
+    public function initialize(){
+
+    }
+
     public function listAction(){
         if(!$this->request->isOptions()){
             $page = $this->getParams('current',null,0);
@@ -16,7 +21,7 @@ class AdminController extends ControllerBase
             $fields = array('id','name','email');
             $total = Admins::adminCount($where);
             $rows = Admins::adminList($where,$offset,$limit,$fields);
-            $data = array( 'total'=> $total , 'admins'=> $rows,'current' => $page, 'limit' => $limit);
+            $data = array( 'total'=> $total , 'admins'=> $rows,'current' => $page, 'limit' => $limit,'sss'=> $this->deny);
             return $this->response->setJsonContent($data);
         }
     }
