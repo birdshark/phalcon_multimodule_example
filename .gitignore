@@ -97,3 +97,4 @@ $RECYCLE.BIN/
 *.log
 README.md
 *.vagrant
+public/
