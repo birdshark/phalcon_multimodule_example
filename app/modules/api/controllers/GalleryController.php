@@ -10,7 +10,7 @@ class GalleryController extends ControllerBase
     public function listAction()
     {
         if (!$this->request->isOptions()) {
-            $galleries = Gallery::find(["order" => "added_on desc"]);
+            $galleries = Gallery::find(["order" => "id desc"]);
             return $this->response->setJsonContent(['data' => $galleries]);
         }
     }
