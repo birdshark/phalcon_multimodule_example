@@ -3,12 +3,8 @@
 namespace Application\Modules\Api\Controllers;
 
 use Application\Common\Models\Admins;
-use Application\Common\Models\PermissionRole;
 use Application\Common\Models\RoleAdmin;
-use Application\Common\Models\Roles;
 use Application\Modules\Api\Plugins\TokenPlugin;
-use Phalcon\Acl;
-use Phalcon\Acl\Adapter\Memory as AclList;
 
 class AuthController extends ControllerBase
 {
@@ -28,9 +24,11 @@ class AuthController extends ControllerBase
                     'email'    => $email,
                 )
             ));
+            $code = $this->security->hash($password);
             if(!$admin){
-                return $this->response->setJsonContent(['data'=>$admin]);
+                return $this->response->setJsonContent(['data'=>$code]);
             }
+
             if($this->security->checkHash($password, $admin->password)){
                 $roles_info = (new RoleAdmin())->getRole($admin->id);
                 $roles = pluck($roles_info,['name']);
@@ -40,9 +38,9 @@ class AuthController extends ControllerBase
                     $permissions = array_merge($all_permissions[$role],$permissions);
                 }
                 $token = auth_code($admin->id .'|'. implode(',',$roles),"auth_token");
-                return $this->response->setJsonContent(['permissions'=>$permissions,'uid'=>$admin->id,'avatar'=>'http://'.$_SERVER['HTTP_HOST'].$admin->avatar,'nick'=>$admin->name,'server'=>$_SERVER, 'token'=> $token]);
+                return $this->response->setJsonContent(['permissions'=>$permissions,'uid'=>$admin->id,'avatar'=>'http://'.$_SERVER['HTTP_HOST'].$admin->avatar,'nick'=>$admin->name,'server'=>$_SERVER, 'token'=> $token,'currentAuthority'=>'admin','status'=> 'ok']);
             }else{
-                return $this->response->setJsonContent(['data'=>false]);
+                return $this->response->setJsonContent(['data'=>$code]);
             }
         }
     }

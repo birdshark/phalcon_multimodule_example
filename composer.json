@@ -1,6 +1,13 @@
 {
     "require": {
         "phalcon/ide-stubs": "^3.3",
-        "imagine/imagine": "^0.7.1"
+        "imagine/imagine": "^0.7.1",
+        "enqueue/amqp-ext": "0.8.42"
+    },
+    "repositories": {
+        "packagist": {
+            "type": "composer",
+            "url": "https://packagist.phpcomposer.com"
+        }
     }
 }
