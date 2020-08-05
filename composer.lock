@@ -1,0 +1,316 @@
+{
+    "_readme": [
+        "This file locks the dependencies of your project to a known state",
+        "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
+        "This file is @generated automatically"
+    ],
+    "content-hash": "1d79e16beb6cac15b51fe5246de4c550",
+    "packages": [
+        {
+            "name": "enqueue/amqp-ext",
+            "version": "0.8.42",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/php-enqueue/amqp-ext.git",
+                "reference": "d6a3424d72bd138f73813b50cfba2fb354621f6f"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/php-enqueue/amqp-ext/zipball/d6a3424d72bd138f73813b50cfba2fb354621f6f",
+                "reference": "d6a3424d72bd138f73813b50cfba2fb354621f6f",
+                "shasum": ""
+            },
+            "require": {
+                "enqueue/amqp-tools": "^0.8.35@dev",
+                "ext-amqp": "^1.9.3",
+                "php": ">=5.6",
+                "queue-interop/amqp-interop": "^0.7.4@dev"
+            },
+            "require-dev": {
+                "empi89/php-amqp-stubs": "*@dev",
+                "enqueue/enqueue": "^0.8@dev",
+                "enqueue/null": "^0.8@dev",
+                "enqueue/test": "^0.8@dev",
+                "phpunit/phpunit": "~5.4.0",
+                "queue-interop/queue-spec": "^0.5.3@dev",
+                "symfony/config": "^2.8|^3|^4",
+                "symfony/dependency-injection": "^2.8|^3|^4"
+            },
+            "suggest": {
+                "enqueue/enqueue": "If you'd like to use advanced features like Client abstract layer or Symfony integration features"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "0.8.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Enqueue\\AmqpExt\\": ""
+                },
+                "exclude-from-classmap": [
+                    "/Tests/"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "description": "Message Queue Amqp Transport",
+            "homepage": "https://enqueue.forma-pro.com/",
+            "keywords": [
+                "AMQP",
+                "messaging",
+                "queue"
+            ],
+            "time": "2018-11-22T13:24:40+00:00"
+        },
+        {
+            "name": "enqueue/amqp-tools",
+            "version": "0.8.42",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/php-enqueue/amqp-tools.git",
+                "reference": "f92f5cdb7f3f2fba0f6a52b30fa184be8eed5e3c"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/php-enqueue/amqp-tools/zipball/f92f5cdb7f3f2fba0f6a52b30fa184be8eed5e3c",
+                "reference": "f92f5cdb7f3f2fba0f6a52b30fa184be8eed5e3c",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.6",
+                "queue-interop/amqp-interop": "^0.7@dev",
+                "queue-interop/queue-interop": "^0.6@dev|^1.0.0-alpha1"
+            },
+            "require-dev": {
+                "enqueue/null": "^0.8@dev",
+                "enqueue/test": "^0.8@dev",
+                "phpunit/phpunit": "~5.4.0"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "0.8.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Enqueue\\AmqpTools\\": ""
+                },
+                "exclude-from-classmap": [
+                    "/Tests/"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "description": "Message Queue Amqp Tools",
+            "homepage": "https://enqueue.forma-pro.com/",
+            "keywords": [
+                "AMQP",
+                "messaging",
+                "queue"
+            ],
+            "time": "2018-11-22T13:24:40+00:00"
+        },
+        {
+            "name": "imagine/imagine",
+            "version": "v0.7.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/avalanche123/Imagine.git",
+                "reference": "a9a702a946073cbca166718f1b02a1e72d742daa"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/avalanche123/Imagine/zipball/a9a702a946073cbca166718f1b02a1e72d742daa",
+                "reference": "a9a702a946073cbca166718f1b02a1e72d742daa",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.3.2"
+            },
+            "require-dev": {
+                "sami/sami": "^3.3",
+                "symfony/phpunit-bridge": "^3.2"
+            },
+            "suggest": {
+                "ext-gd": "to use the GD implementation",
+                "ext-gmagick": "to use the Gmagick implementation",
+                "ext-imagick": "to use the Imagick implementation"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-develop": "0.7-dev"
+                }
+            },
+            "autoload": {
+                "psr-0": {
+                    "Imagine": "lib/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Bulat Shakirzyanov",
+                    "email": "mallluhuct@gmail.com",
+                    "homepage": "http://avalanche123.com"
+                }
+            ],
+            "description": "Image processing for PHP 5.3",
+            "homepage": "http://imagine.readthedocs.org/",
+            "keywords": [
+                "drawing",
+                "graphics",
+                "image manipulation",
+                "image processing"
+            ],
+            "time": "2017-05-16T10:31:22+00:00"
+        },
+        {
+            "name": "phalcon/ide-stubs",
+            "version": "v3.3.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/phalcon/ide-stubs.git",
+                "reference": "e22d3f2c8b1e60a206a88d5dda07ec3e34dece3b"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/phalcon/ide-stubs/zipball/e22d3f2c8b1e60a206a88d5dda07ec3e34dece3b",
+                "reference": "e22d3f2c8b1e60a206a88d5dda07ec3e34dece3b",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.3.0"
+            },
+            "type": "library",
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "BSD-3-Clause"
+            ],
+            "authors": [
+                {
+                    "name": "Phalcon Team",
+                    "email": "team@phalconphp.com",
+                    "homepage": "https://phalconphp.com/en/team"
+                },
+                {
+                    "name": "Contributors",
+                    "homepage": "https://github.com/phalcon/ide-stubs/graphs/contributors"
+                }
+            ],
+            "description": "The most complete Phalcon Framework IDE stubs library which enables autocompletion in modern IDEs.",
+            "homepage": "https://phalconphp.com",
+            "keywords": [
+                "Devtools",
+                "Eclipse",
+                "autocomplete",
+                "ide",
+                "netbeans",
+                "phalcon",
+                "phpstorm",
+                "stub",
+                "stubs"
+            ],
+            "time": "2017-12-25T15:12:50+00:00"
+        },
+        {
+            "name": "queue-interop/amqp-interop",
+            "version": "0.7.5",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/queue-interop/amqp-interop.git",
+                "reference": "e1679b0a308e320c508afa74b5148bf58479dd0d"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/queue-interop/amqp-interop/zipball/e1679b0a308e320c508afa74b5148bf58479dd0d",
+                "reference": "e1679b0a308e320c508afa74b5148bf58479dd0d",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.5",
+                "queue-interop/queue-interop": "^0.6.2|0.7.x-dev|^1.0.0-alpha1"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "~5.4.0"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "0.7.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Interop\\Amqp\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "time": "2018-08-08T17:31:15+00:00"
+        },
+        {
+            "name": "queue-interop/queue-interop",
+            "version": "0.6.2",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/queue-interop/queue-interop.git",
+                "reference": "950c8083ff328751843080f25266dec0db624ddb"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/queue-interop/queue-interop/zipball/950c8083ff328751843080f25266dec0db624ddb",
+                "reference": "950c8083ff328751843080f25266dec0db624ddb",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.5"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.0-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Interop\\Queue\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "description": "Promoting the interoperability of MQs objects. Based on Java JMS",
+            "homepage": "https://github.com/queue-interop/queue-interop",
+            "keywords": [
+                "MQ",
+                "jms",
+                "message queue",
+                "messaging",
+                "queue"
+            ],
+            "time": "2018-08-05T12:16:04+00:00"
+        }
+    ],
+    "packages-dev": [],
+    "aliases": [],
+    "minimum-stability": "stable",
+    "stability-flags": [],
+    "prefer-stable": false,
+    "prefer-lowest": false,
+    "platform": [],
+    "platform-dev": []
+}
